@@ -1,0 +1,18 @@
+#!/bin/sh -e
+
+# You have to execute this script as a super user, from the directory
+# containing this file.
+
+cat > /etc/systemd/system/dockerdns.service <<EOSF
+[Unit]
+Description=DNS service for docker containers
+After=docker.service
+
+[Service]
+WorkingDirectory=${PWD}
+ExecStart=${PWD}/start
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOSF
